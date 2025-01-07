@@ -1,0 +1,6 @@
+{
+    "log": {
+        "prefix": "log",
+        "body": "log::log!(log::Level::${1:Debug}, \"$2\");$0"
+    }
+}
