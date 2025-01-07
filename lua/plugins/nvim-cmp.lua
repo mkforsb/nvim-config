@@ -16,6 +16,14 @@ return {
             completion = {
                 completeopt = 'menu,menuone,noinsert',
             },
+            formatting = {
+                fields = { 'abbr', 'kind' },
+                expandable_indicator = true,
+                format = function(_, vim_item)
+                    vim_item.menu = ''
+                    return vim_item
+                end,
+            },
             mapping = cmp.mapping.preset.insert({
                 ['<CR>'] = cmp.mapping.confirm({ select = true }),
                 ['<Tab>'] = {
