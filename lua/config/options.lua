@@ -61,3 +61,6 @@ vim.opt.timeoutlen = 300
 
 -- Set minimal number of lines to keep above/below the cursor.
 vim.opt.scrolloff = 8
+
+-- Disable virtual text diagnostics since we're using lsp_lines.
+vim.diagnostic.config({ virtual_text = false })
