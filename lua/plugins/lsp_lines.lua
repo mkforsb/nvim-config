@@ -1,4 +1,4 @@
 return {
-    'https://www.github.com/mkforsb/lsp_lines.nvim',
+    'mkforsb/lsp_lines',
     opts = {},
 }
