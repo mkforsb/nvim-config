@@ -114,6 +114,11 @@ vim.keymap.set('n', '<Leader>th', function()
     vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 end, { desc = 'Toggle inlay hints' })
 
+-- Toggle diagnostics.
+vim.schedule(function()
+    vim.keymap.set('n', '<Leader>l', require('lsp_lines').toggle, { desc = 'Toggle diagnostics' })
+end)
+
 -- Trouble.
 vim.keymap.set({ 'n', 'i', 'v' }, '<F3>', function()
     require('trouble').toggle('diagnostics')
