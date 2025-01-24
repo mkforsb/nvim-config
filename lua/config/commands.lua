@@ -10,3 +10,8 @@ end, {})
 vim.api.nvim_create_user_command('ReloadSnippets', function()
     require('scripts.snippets').load_snippets()
 end, {})
+
+-- `:Scratch <lang>` opens a scratch file/project in the given language.
+vim.api.nvim_create_user_command('Scratch', function(data)
+    require('scripts.scratch').create_scratch(data.args)
+end, { nargs = '*' })
