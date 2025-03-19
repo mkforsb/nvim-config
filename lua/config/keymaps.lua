@@ -162,3 +162,8 @@ vim.keymap.set({ 'n', 'i', 'v' }, '<End>', '<Nop>', { silent = true })
 vim.keymap.set({ 'n', 'i', 'v' }, '<Del>', '<Nop>', { silent = true })
 vim.keymap.set({ 'n', 'i', 'v' }, '<PageUp>', '<Nop>', { silent = true })
 vim.keymap.set({ 'n', 'i', 'v' }, '<PageDown>', '<Nop>', { silent = true })
+
+-- Kulala HTTP client
+vim.keymap.set({ 'n', 'v' }, '<leader>rq', function()
+    require('kulala').run()
+end, { desc = 'Send HTTP request' })
