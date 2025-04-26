@@ -34,6 +34,18 @@ local function create_scratch_python(path)
     end
 end
 
+--- @param path string
+local function create_scratch_lua(path)
+    local file = io.open(path .. '/scratch.lua', 'w+')
+
+    if file then
+        vim.cmd(':e ' .. path .. '/scratch.lua')
+    else
+        vim.api.nvim_echo({ { 'Scratch(lua): failed to create file\n' } }, true, { err = true })
+        return
+    end
+end
+
 --- @param lang string
 M.create_scratch = function(lang)
     local handlers = {
@@ -41,6 +53,7 @@ M.create_scratch = function(lang)
         rust = create_scratch_rust,
         py = create_scratch_python,
         python = create_scratch_python,
+        lua = create_scratch_lua,
     }
 
     if handlers[lang] == nil then
