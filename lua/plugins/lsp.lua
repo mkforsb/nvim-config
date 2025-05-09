@@ -59,8 +59,8 @@ return {
                     files = {
                         excludeDirs = { '.flatpak-builder' },
                     },
-                }
-            }
+                },
+            },
         })
 
         require('mason-lspconfig').setup({
