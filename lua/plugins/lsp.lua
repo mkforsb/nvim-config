@@ -40,43 +40,31 @@ return {
         --     end
         -- })
 
-        local capabilities = vim.lsp.protocol.make_client_capabilities()
-        capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+        -- vim.lsp.set_log_level('debug')
 
-        local servers = {
-            rust_analyzer = {
+        vim.lsp.config('rust_analyzer', {
+            settings = {
                 ['rust-analyzer'] = {
                     cargo = {
-                        -- buildScripts = {
-                        --     enable = true,
-                        -- },
+                        buildScripts = {
+                            enable = true,
+                        },
                         -- extraEnv = {
                         --     ['CARGO_PROFILE_RUST_ANALYZER_INHERITS'] = 'dev',
                         -- },
                         -- extraArgs = { '--profile', 'rust-analyzer' },
                         -- features = { 'default', 'mocks' },
-                        -- features = 'all',
+                        features = 'all',
                     },
                     files = {
                         excludeDirs = { '.flatpak-builder' },
                     },
-                },
-            },
-        }
-
-        require('mason').setup()
+                }
+            }
+        })
 
         require('mason-lspconfig').setup({
-            handlers = {
-                function(server_name)
-                    local server = servers[server_name] or {}
-
-                    server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-
-                    require('lspconfig')[server_name].setup(server)
-                end,
-            },
-            automatic_installation = false,
+            automatic_enable = true,
             ensure_installed = {},
         })
     end,
