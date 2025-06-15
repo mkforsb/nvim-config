@@ -27,6 +27,7 @@ local function create_scratch_python(path)
     local file = io.open(path .. '/scratch.py', 'w+')
 
     if file then
+        file:close()
         vim.cmd(':e ' .. path .. '/scratch.py')
     else
         vim.api.nvim_echo({ { 'Scratch(python): failed to create file\n' } }, true, { err = true })
@@ -39,6 +40,7 @@ local function create_scratch_lua(path)
     local file = io.open(path .. '/scratch.lua', 'w+')
 
     if file then
+        file:close()
         vim.cmd(':e ' .. path .. '/scratch.lua')
     else
         vim.api.nvim_echo({ { 'Scratch(lua): failed to create file\n' } }, true, { err = true })
