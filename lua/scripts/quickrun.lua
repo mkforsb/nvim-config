@@ -13,6 +13,7 @@ M.quickrun = function()
         lua = '/usr/bin/lua {filepath}',
         py = '/usr/bin/env python3 {filepath}',
         rs = 'cargo build',
+        go = 'go run {filepath}',
     }
 
     local shebang = function()
