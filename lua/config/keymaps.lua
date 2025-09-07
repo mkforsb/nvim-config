@@ -77,9 +77,6 @@ vim.keymap.set('v', '<C-q>', comments.toggle_selection_comment, { desc = 'Toggle
 vim.keymap.set('n', '<C-e>', 'mpA;<Esc>`p', { desc = 'Add semicolon at end of line' })
 vim.keymap.set('i', '<C-e>', '<C-o>mp<C-o>A;<C-o>`p', { desc = 'Add semicolon at end of line' })
 
--- Paste over a selection without placing the selection in the clipboard.
-vim.keymap.set('v', '<leader>p', '"_dP', { desc = 'Paste over selection, discarding selection' })
-
 -- Treesitter incremental selections.
 vim.keymap.set('n', '<C-s>', function()
     require('nvim-treesitter.incremental_selection').init_selection()
@@ -129,7 +126,7 @@ vim.keymap.set({ 'n', 'v' }, 's', '<Plug>(leap-forward)', { desc = 'Leap forward
 vim.keymap.set({ 'n', 'v' }, 'S', '<Plug>(leap-backward)', { desc = 'Leap backwards' })
 
 -- Quick save all
-vim.keymap.set({ 'n', 'v' }, '<F4>', ':wa<CR>', { desc = 'Save all' })
+vim.keymap.set({ 'n', 'v' }, '<F4>', '<Esc>:wa<CR>', { desc = 'Save all' })
 vim.keymap.set('i', '<F4>', '<Esc>:wa<CR>', { desc = 'Save all' })
 
 -- Quickrun.
