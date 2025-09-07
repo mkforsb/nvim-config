@@ -14,6 +14,9 @@ vim.opt.guicursor = 'a:blinkon0'
 -- Print the line number in front of each line.
 vim.opt.number = true
 
+-- Disable line wrapping.
+vim.opt.wrap = false
+
 -- Always show the "sign column" next to line numbers.
 vim.opt.signcolumn = 'yes'
 
