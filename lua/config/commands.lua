@@ -1,5 +1,20 @@
 -- `:Close` closes the current buffer.
-vim.api.nvim_create_user_command('Close', 'bp|bd! #', {})
+-- vim.api.nvim_create_user_command('Close', 'bp|bd! #', {})
+vim.api.nvim_create_user_command('Close', function()
+    local numbufs = 0
+
+    for _, bufnum in ipairs(vim.api.nvim_list_bufs()) do
+        if vim.api.nvim_buf_get_option(bufnum, 'buflisted') then
+            numbufs = numbufs + 1
+        end
+    end
+
+    if numbufs > 1 then
+        vim.cmd('bp|bd! #')
+    else
+        vim.cmd('bd')
+    end
+end, {})
 
 -- `:Snippets` opens the snippets file for current language.
 vim.api.nvim_create_user_command('Snippets', function()
