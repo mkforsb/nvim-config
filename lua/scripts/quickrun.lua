@@ -14,6 +14,7 @@ M.quickrun = function()
         py = '/usr/bin/env python3 {filepath}',
         rs = 'cargo build',
         go = 'go run {filepath}',
+        php = 'php {filepath}',
     }
 
     local shebang = function()
