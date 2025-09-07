@@ -79,6 +79,18 @@ local function create_scratch_go(path)
     end
 end
 
+--- @param path string
+local function create_scratch_php(path)
+    local file = io.open(path .. '/scratch.php', 'w+')
+
+    if file then
+        vim.cmd(':e ' .. path .. '/scratch.php')
+    else
+        vim.api.nvim_echo({ { 'Scratch(php): failed to create file\n' } }, true, { err = true })
+        return
+    end
+end
+
 --- @param lang string
 M.create_scratch = function(lang)
     local handlers = {
@@ -88,6 +100,7 @@ M.create_scratch = function(lang)
         python = create_scratch_python,
         lua = create_scratch_lua,
         go = create_scratch_go,
+        php = create_scratch_php,
     }
 
     if handlers[lang] == nil then
