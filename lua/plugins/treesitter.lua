@@ -4,6 +4,9 @@ return {
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     opts = {
         auto_install = true,
+        indent = {
+            enable = true,
+        },
         highlight = {
             enable = true,
             -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
