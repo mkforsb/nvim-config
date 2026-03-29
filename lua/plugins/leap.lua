@@ -1,1 +1,1 @@
-return { 'ggandor/leap.nvim' }
+return { 'https://codeberg.org/andyg/leap.nvim' }
