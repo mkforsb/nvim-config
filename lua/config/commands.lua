@@ -30,3 +30,7 @@ end, {})
 vim.api.nvim_create_user_command('Scratch', function(data)
     require('scripts.scratch').create_scratch(data.args)
 end, { nargs = '*' })
+
+vim.api.nvim_create_user_command('OpenSnapshots', function()
+    require('scripts.php_snapshots').open_snapshots_for_current_test(30)
+end, {})

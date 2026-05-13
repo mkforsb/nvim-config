@@ -1,5 +1,5 @@
 if vim.g.neovide then
-    vim.o.guifont = 'Cousine Nerd Font:h12'
+    vim.o.guifont = 'Cousine Nerd Font:h18'
 
     vim.g.neovide_floating_blur_amount_x = 2.0
     vim.g.neovide_floating_blur_amount_y = 2.0

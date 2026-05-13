@@ -40,5 +40,10 @@ vim.api.nvim_create_autocmd({
 }, {
     callback = function()
         vim.cmd('checktime')
+        vim.cmd('BufferOrderByBufferNumber')
     end,
 })
+
+-- Smart windows
+-- vim.api.nvim_create_autocmd('BufLeave', { callback = require('scripts.smart_windows').smart_buf_leave })
+-- vim.api.nvim_create_autocmd('BufEnter', { callback = require('scripts.smart_windows').smart_buf_enter })
