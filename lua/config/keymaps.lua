@@ -77,17 +77,6 @@ vim.keymap.set('v', '<C-q>', comments.toggle_selection_comment, { desc = 'Toggle
 vim.keymap.set('n', '<C-e>', 'mpA;<Esc>`p', { desc = 'Add semicolon at end of line' })
 vim.keymap.set('i', '<C-e>', '<C-o>mp<C-o>A;<C-o>`p', { desc = 'Add semicolon at end of line' })
 
--- Treesitter incremental selections.
-vim.keymap.set('n', '<C-s>', function()
-    require('nvim-treesitter.incremental_selection').init_selection()
-end, { desc = 'Begin incremental selection' })
-vim.keymap.set('v', '<C-s>', function()
-    require('nvim-treesitter.incremental_selection').node_incremental()
-end, { desc = 'Expand incremental selection' })
-vim.keymap.set('v', '<C-a>', function()
-    require('nvim-treesitter.incremental_selection').node_decremental()
-end, { desc = 'Shrink incremental selection' })
-
 -- Telescope.
 vim.schedule(function()
     local builtin = require('telescope.builtin')
@@ -148,6 +137,9 @@ end, { desc = 'Signature documentation' })
 vim.keymap.set('n', '<F1>', ':1TermSelect<CR>', { desc = 'Open terminal' })
 vim.keymap.set({ 'i', 'v' }, '<F1>', '<Esc>:1TermSelect<CR>', { desc = 'Open terminal' })
 vim.keymap.set('t', '<F1>', '<Cmd>wincmd p<CR>', { desc = 'Close terminal' })
+vim.keymap.set({ 'v', 'n' }, '<Leader>t1', '<Esc>:1TermSelect<CR>', { desc = 'Open terminal #1' })
+vim.keymap.set({ 'v', 'n' }, '<Leader>t2', '<Esc>:2TermSelect<CR>', { desc = 'Open terminal #2' })
+vim.keymap.set({ 'v', 'n' }, '<Leader>t3', '<Esc>:3TermSelect<CR>', { desc = 'Open terminal #3' })
 
 -- Disable tenkeys.
 vim.keymap.set({ 'n', 'i', 'v' }, '<Up>', '<Nop>', { silent = true })
