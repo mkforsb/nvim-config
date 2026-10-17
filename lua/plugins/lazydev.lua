@@ -1,13 +1,7 @@
 return {
     'folke/lazydev.nvim',
-    dependencies = {
-        { 'Bilal2453/luvit-meta', lazy = true },
-    },
     ft = 'lua',
-    opts = {
-        library = {
-            -- Load luvit types when the `vim.uv` word is found
-            { path = 'luvit-meta/library', words = { 'vim%.uv' } },
-        },
-    },
+    -- No luv library entry needed: Nvim 0.12+ ships luv type annotations in $VIMRUNTIME/lua/uv/_meta.lua,
+    -- which lazydev already includes.
+    opts = {},
 }

@@ -1,12 +1,17 @@
 return {
     'neovim/nvim-lspconfig',
     dependencies = {
-        { 'williamboman/mason.nvim', config = true },
-        'williamboman/mason-lspconfig.nvim',
+        { 'mason-org/mason.nvim', config = true },
+        'mason-org/mason-lspconfig.nvim',
         { 'j-hui/fidget.nvim', opts = {} },
         'hrsh7th/cmp-nvim-lsp',
     },
     config = function()
+        -- Advertise nvim-cmp's completion capabilities to all servers.
+        vim.lsp.config('*', {
+            capabilities = require('cmp_nvim_lsp').default_capabilities(),
+        })
+
         vim.lsp.config('rust_analyzer', {
             settings = {
                 ['rust-analyzer'] = {
@@ -30,9 +35,9 @@ return {
 
         require('mason-lspconfig').setup({
             automatic_enable = {
-                exclude = { "jdtls" },
+                exclude = { 'jdtls' },
             },
-            ensure_installed = { "jdtls" },
+            ensure_installed = { 'jdtls' },
         })
     end,
 }

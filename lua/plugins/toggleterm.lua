@@ -1,5 +1,5 @@
 return {
-    'mkforsb/toggleterm.nvim',
+    'akinsho/toggleterm.nvim',
     version = '*',
     opts = {
         open_mapping = '<Nop>',
@@ -16,4 +16,23 @@ return {
             border = 'single',
         },
     },
+    config = function(_, opts)
+        require('toggleterm').setup(opts)
+
+        -- `:<count>TermSelect` focuses (or opens) terminal <count>, replacing upstream's picker.
+        -- (Previously provided by the mkforsb/toggleterm.nvim fork.)
+        vim.api.nvim_create_user_command('TermSelect', function(args)
+            local term = require('toggleterm.terminal').get(args.count, true)
+
+            if not term then
+                return
+            end
+
+            if term:is_open() then
+                term:focus()
+            else
+                term:open()
+            end
+        end, { count = true, nargs = 0 })
+    end,
 }
