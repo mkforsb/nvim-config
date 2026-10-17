@@ -10,7 +10,7 @@ return {
     config = function()
         require('nvim-tree').setup({
             view = {
-                width = 60,
+                width = 30,
             },
             git = {
                 enable = false,
