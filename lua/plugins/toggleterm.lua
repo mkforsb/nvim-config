@@ -15,6 +15,23 @@ return {
             -- not natively supported but implemented in this plugin.
             border = 'single',
         },
+        -- Per-terminal border colour, keyed by terminal number (e.g. `:2TermSelect`, `:ToggleTerm 2`).
+        -- Values are highlight groups to link to; terminals not listed keep the default border.
+        -- Setting `term.highlights` (rather than poking `winhighlight` directly) means toggleterm
+        -- itself re-applies it, e.g. after `:colorscheme`. `on_create` runs before toggleterm
+        -- applies highlights on first open.
+        on_create = function(term)
+            local border_hl = {
+                [2] = 'DiagnosticWarn',
+                [3] = 'DiagnosticError',
+            }
+
+            if border_hl[term.id] then
+                term.highlights = vim.tbl_extend('force', vim.deepcopy(require('toggleterm.config').get('highlights')), {
+                    FloatBorder = { link = border_hl[term.id] },
+                })
+            end
+        end,
     },
     config = function(_, opts)
         require('toggleterm').setup(opts)
