@@ -2,6 +2,9 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+-- Disable the builtin directory browser (nvim 0.13+, see :help dir), nvim-tree handles directories.
+vim.g.loaded_nvim_dir_plugin = 1
+
 -- Disable the use of swapfiles.
 vim.opt.swapfile = false
 
@@ -65,5 +68,5 @@ vim.opt.timeoutlen = 300
 -- Set minimal number of lines to keep above/below the cursor.
 vim.opt.scrolloff = 8
 
--- Disable virtual text diagnostics since we're using lsp_lines.
+-- Disable virtual text diagnostics since we're using virtual lines (toggled with <Leader>l).
 vim.diagnostic.config({ virtual_text = false })

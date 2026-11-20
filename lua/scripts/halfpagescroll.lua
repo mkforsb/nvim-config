@@ -12,7 +12,7 @@ end
 
 M.up = function()
     local view = vim.fn.winsaveview()
-    local scroll = vim.opt.scroll:get()
+    local scroll = vim.wo.scroll
 
     vim.fn.winrestview({
         lnum = view.lnum - scroll,
@@ -22,7 +22,7 @@ end
 
 M.down = function()
     local view = vim.fn.winsaveview()
-    local scroll = vim.opt.scroll:get()
+    local scroll = vim.wo.scroll
 
     vim.fn.winrestview({
         lnum = view.lnum + scroll,

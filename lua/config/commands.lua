@@ -4,7 +4,7 @@ vim.api.nvim_create_user_command('Close', function()
     local numbufs = 0
 
     for _, bufnum in ipairs(vim.api.nvim_list_bufs()) do
-        if vim.api.nvim_buf_get_option(bufnum, 'buflisted') then
+        if vim.bo[bufnum].buflisted then
             numbufs = numbufs + 1
         end
     end

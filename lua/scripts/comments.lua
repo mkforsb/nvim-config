@@ -28,8 +28,8 @@ local toggle_line = function(text, indent, commentpre, commentpost, commentpre_q
 end
 
 M.toggle_line_comment = function()
-    if vim.bo.commentstring == nil then
-        vim.api.nvim_err_write('No commentstring available!')
+    if vim.bo.commentstring == '' then
+        vim.api.nvim_echo({ { 'No commentstring available!' } }, true, { err = true })
         return
     end
 
@@ -49,8 +49,8 @@ M.toggle_line_comment = function()
 end
 
 M.toggle_selection_comment = function()
-    if vim.bo.commentstring == nil then
-        vim.api.nvim_err_write('No commentstring available!')
+    if vim.bo.commentstring == '' then
+        vim.api.nvim_echo({ { 'No commentstring available!' } }, true, { err = true })
         return
     end
 

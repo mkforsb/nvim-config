@@ -29,4 +29,6 @@ require('lazy').setup({
     install = { colorscheme = { 'default' } },
     -- automatically check for plugin updates
     checker = { enabled = false },
+    -- No plugins in this config need luarocks.
+    rocks = { enabled = false },
 })

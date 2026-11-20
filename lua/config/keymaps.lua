@@ -3,7 +3,10 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Disable spacebar (by itself, <Leader> stuff still works) in normal and visual mode.
-vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+--
+-- NOTE: Mappings below use 'x' (Visual) rather than 'v' (Visual + Select) for printable keys, since
+-- vim.snippet placeholders are in Select mode where typed characters should replace the placeholder.
+vim.keymap.set({ 'n', 'x' }, '<Space>', '<Nop>', { silent = true })
 
 -- Clear search highlights and stop snippet when pressing Esc in normal mode.
 vim.keymap.set('n', '<Esc>', function()
@@ -19,23 +22,23 @@ vim.keymap.set('n', '<F2>', ':bn<CR>', { desc = 'Next buffer' })
 
 -- Half-page up/down + center cursor.
 local halfpagescroll = require('scripts.halfpagescroll')
-vim.keymap.set({ 'n', 'v' }, '<C-k>', halfpagescroll.up, { desc = 'Scroll half page up and center cursor' })
-vim.keymap.set({ 'n', 'v' }, '<C-j>', halfpagescroll.down, { desc = 'Scroll half page down and center cursor' })
+vim.keymap.set({ 'n', 'x' }, '<C-k>', halfpagescroll.up, { desc = 'Scroll half page up and center cursor' })
+vim.keymap.set({ 'n', 'x' }, '<C-j>', halfpagescroll.down, { desc = 'Scroll half page down and center cursor' })
 
 -- Ctrl-Left/Right.
-vim.keymap.set({ 'n', 'v' }, '<C-h>', 'b', { desc = 'Previous word' })
-vim.keymap.set({ 'n', 'v' }, '<C-l>', 'w', { desc = 'Next word' })
+vim.keymap.set({ 'n', 'x' }, '<C-h>', 'b', { desc = 'Previous word' })
+vim.keymap.set({ 'n', 'x' }, '<C-l>', 'w', { desc = 'Next word' })
 
 -- Duplicate line/selection.
 vim.keymap.set('n', '<C-d>', 'mpyyp`p', { desc = 'Duplicate line' })
 vim.keymap.set('i', '<C-d>', '<Esc>yypgi', { desc = 'Duplicate line' })
-vim.keymap.set('v', '<C-d>', 'y`>pgv', { desc = 'Duplicate selection' })
+vim.keymap.set('x', '<C-d>', 'y`>pgv', { desc = 'Duplicate selection' })
 
 -- Tab to indent/dedent.
 vim.keymap.set('n', '<Tab>', '>>', { desc = 'Increase indent' })
 vim.keymap.set('n', '<S-Tab>', '<<', { desc = 'Decrease indent' })
-vim.keymap.set('v', '<Tab>', '>><Esc>gv', { desc = 'Increase indent' })
-vim.keymap.set('v', '<S-Tab>', '<<<Esc>gv', { desc = 'Decrease indent' })
+vim.keymap.set('x', '<Tab>', '>><Esc>gv', { desc = 'Increase indent' })
+vim.keymap.set('x', '<S-Tab>', '<<<Esc>gv', { desc = 'Decrease indent' })
 
 -- Tab for snippets.
 vim.keymap.set('s', '<Tab>', function()
@@ -61,17 +64,17 @@ end, { desc = 'Previous snippet item' })
 -- Move up/down.
 vim.keymap.set('n', 'L', "V:move '<-2<CR>==", { desc = 'Move line up' })
 vim.keymap.set('n', 'H', "V:move '>+1<CR>==", { desc = 'Move line down' })
-vim.keymap.set('v', 'L', ":move '<-2<CR>gv=gv", { desc = 'Move selection up' })
-vim.keymap.set('v', 'H', ":move '>+1<CR>gv=gv", { desc = 'Move selection down' })
+vim.keymap.set('x', 'L', ":move '<-2<CR>gv=gv", { desc = 'Move selection up' })
+vim.keymap.set('x', 'H', ":move '>+1<CR>gv=gv", { desc = 'Move selection down' })
 
 -- Accessible square brackets for Swedish keyboard layout.
-vim.cmd(':map ö [')
-vim.cmd(':map ä ]')
+vim.keymap.set({ 'n', 'x', 'o' }, 'ö', '[', { remap = true })
+vim.keymap.set({ 'n', 'x', 'o' }, 'ä', ']', { remap = true })
 
 -- Comments.
 local comments = require('scripts.comments')
 vim.keymap.set({ 'n', 'i' }, '<C-q>', comments.toggle_line_comment, { desc = 'Toggle line comment' })
-vim.keymap.set('v', '<C-q>', comments.toggle_selection_comment, { desc = 'Toggle comments' })
+vim.keymap.set('x', '<C-q>', comments.toggle_selection_comment, { desc = 'Toggle comments' })
 
 -- Line end semicolon.
 vim.keymap.set('n', '<C-e>', 'mpA;<Esc>`p', { desc = 'Add semicolon at end of line' })
@@ -100,10 +103,20 @@ vim.keymap.set('n', '<Leader>th', function()
     vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 end, { desc = 'Toggle inlay hints' })
 
--- Toggle diagnostics.
-vim.schedule(function()
-    vim.keymap.set('n', '<Leader>l', require('lsp_lines').toggle, { desc = 'Toggle diagnostics' })
-end)
+-- Toggle diagnostics (virtual lines).
+local virtual_lines = {
+    -- Don't render in buffers without file names (e.g. Lazy, Mason).
+    format = function(diagnostic)
+        if vim.api.nvim_buf_get_name(diagnostic.bufnr) == '' then
+            return nil
+        end
+
+        return diagnostic.code and ('%s: %s'):format(diagnostic.code, diagnostic.message) or diagnostic.message
+    end,
+}
+vim.keymap.set('n', '<Leader>l', function()
+    vim.diagnostic.config({ virtual_lines = not vim.diagnostic.config().virtual_lines and virtual_lines })
+end, { desc = 'Toggle diagnostics' })
 
 -- Trouble.
 vim.keymap.set({ 'n', 'i', 'v' }, '<F3>', function()
@@ -111,8 +124,8 @@ vim.keymap.set({ 'n', 'i', 'v' }, '<F3>', function()
 end, { desc = 'Open diagnostics panel' })
 
 -- Leap.
-vim.keymap.set({ 'n', 'v' }, 's', '<Plug>(leap-forward)', { desc = 'Leap forwards' })
-vim.keymap.set({ 'n', 'v' }, 'S', '<Plug>(leap-backward)', { desc = 'Leap backwards' })
+vim.keymap.set({ 'n', 'x' }, 's', '<Plug>(leap-forward)', { desc = 'Leap forwards' })
+vim.keymap.set({ 'n', 'x' }, 'S', '<Plug>(leap-backward)', { desc = 'Leap backwards' })
 
 -- Quick save all
 vim.keymap.set({ 'n', 'v' }, '<F4>', '<Esc>:wa<CR>', { desc = 'Save all' })
@@ -137,9 +150,9 @@ end, { desc = 'Signature documentation' })
 vim.keymap.set('n', '<F1>', ':1TermSelect<CR>', { desc = 'Open terminal' })
 vim.keymap.set({ 'i', 'v' }, '<F1>', '<Esc>:1TermSelect<CR>', { desc = 'Open terminal' })
 vim.keymap.set('t', '<F1>', '<Cmd>wincmd p<CR>', { desc = 'Close terminal' })
-vim.keymap.set({ 'v', 'n' }, '<Leader>t1', '<Esc>:1TermSelect<CR>', { desc = 'Open terminal #1' })
-vim.keymap.set({ 'v', 'n' }, '<Leader>t2', '<Esc>:2TermSelect<CR>', { desc = 'Open terminal #2' })
-vim.keymap.set({ 'v', 'n' }, '<Leader>t3', '<Esc>:3TermSelect<CR>', { desc = 'Open terminal #3' })
+vim.keymap.set({ 'x', 'n' }, '<Leader>t1', '<Esc>:1TermSelect<CR>', { desc = 'Open terminal #1' })
+vim.keymap.set({ 'x', 'n' }, '<Leader>t2', '<Esc>:2TermSelect<CR>', { desc = 'Open terminal #2' })
+vim.keymap.set({ 'x', 'n' }, '<Leader>t3', '<Esc>:3TermSelect<CR>', { desc = 'Open terminal #3' })
 
 -- Disable tenkeys.
 vim.keymap.set({ 'n', 'i', 'v' }, '<Up>', '<Nop>', { silent = true })

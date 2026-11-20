@@ -4,7 +4,7 @@ local jdtls = require('jdtls')
 
 local lombok_path = vim.fn.stdpath('data') .. '/mason/packages/jdtls/lombok.jar'
 
-local root_dir = require('jdtls.setup').find_root({
+local root_dir = vim.fs.root(0, {
     '.git',
     'mvnw',
     'gradlew',
@@ -44,6 +44,9 @@ local config = {
     },
 
     root_dir = root_dir,
+
+    -- jdtls.start_or_attach() doesn't pick up vim.lsp.config('*'), see plugins/lsp.lua.
+    capabilities = require('cmp_nvim_lsp').default_capabilities(),
 }
 
 jdtls.start_or_attach(config)
