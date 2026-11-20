@@ -30,9 +30,9 @@ return {
 
         require('mason-lspconfig').setup({
             automatic_enable = {
-                exclude = { "jdtls" },
+                exclude = { 'jdtls' },
             },
-            ensure_installed = { "jdtls" },
+            ensure_installed = { 'jdtls' },
         })
     end,
 }
