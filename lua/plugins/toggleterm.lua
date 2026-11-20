@@ -27,9 +27,10 @@ return {
             }
 
             if border_hl[term.id] then
-                term.highlights = vim.tbl_extend('force', vim.deepcopy(require('toggleterm.config').get('highlights')), {
-                    FloatBorder = { link = border_hl[term.id] },
-                })
+                term.highlights =
+                    vim.tbl_extend('force', vim.deepcopy(require('toggleterm.config').get('highlights')), {
+                        FloatBorder = { link = border_hl[term.id] },
+                    })
             end
         end,
     },
