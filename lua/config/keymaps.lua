@@ -137,9 +137,9 @@ end, { desc = 'Signature documentation' })
 vim.keymap.set('n', '<F1>', ':1TermSelect<CR>', { desc = 'Open terminal' })
 vim.keymap.set({ 'i', 'v' }, '<F1>', '<Esc>:1TermSelect<CR>', { desc = 'Open terminal' })
 vim.keymap.set('t', '<F1>', '<Cmd>wincmd p<CR>', { desc = 'Close terminal' })
-vim.keymap.set({ 'i', 'v', 'n' }, '<Leader>t1', '<Esc>:1TermSelect<CR>', { desc = 'Open terminal #1' })
-vim.keymap.set({ 'i', 'v', 'n' }, '<Leader>t2', '<Esc>:2TermSelect<CR>', { desc = 'Open terminal #2' })
-vim.keymap.set({ 'i', 'v', 'n' }, '<Leader>t3', '<Esc>:3TermSelect<CR>', { desc = 'Open terminal #3' })
+vim.keymap.set({ 'v', 'n' }, '<Leader>t1', '<Esc>:1TermSelect<CR>', { desc = 'Open terminal #1' })
+vim.keymap.set({ 'v', 'n' }, '<Leader>t2', '<Esc>:2TermSelect<CR>', { desc = 'Open terminal #2' })
+vim.keymap.set({ 'v', 'n' }, '<Leader>t3', '<Esc>:3TermSelect<CR>', { desc = 'Open terminal #3' })
 
 -- Disable tenkeys.
 vim.keymap.set({ 'n', 'i', 'v' }, '<Up>', '<Nop>', { silent = true })
