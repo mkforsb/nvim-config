@@ -84,6 +84,7 @@ local function create_scratch_php(path)
     local file = io.open(path .. '/scratch.php', 'w+')
 
     if file then
+        file:close()
         vim.cmd(':e ' .. path .. '/scratch.php')
     else
         vim.api.nvim_echo({ { 'Scratch(php): failed to create file\n' } }, true, { err = true })

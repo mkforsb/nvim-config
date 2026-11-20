@@ -28,18 +28,12 @@ vim.api.nvim_create_autocmd('BufReadPost', {
     end,
 })
 
--- Detect changes to open files made by external programs.
-vim.api.nvim_create_autocmd({
-    'BufEnter',
-    'BufLeave',
-    'BufWinEnter',
-    'BufWinLeave',
-    'FocusGained',
-    'CursorHold',
-    'CursorHoldI',
-}, {
+-- Keep barbar tabs sorted by buffer number.
+--
+-- NOTE: No `checktime` needed for detecting external file changes: on nvim 0.13+ 'autoread' (on by
+-- default) uses file system watchers, see :help 'autoread'.
+vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter' }, {
     callback = function()
-        vim.cmd('checktime')
         vim.cmd('BufferOrderByBufferNumber')
     end,
 })

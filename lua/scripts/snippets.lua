@@ -78,6 +78,8 @@ cmp_source.complete = function(self, params, callback)
     local response = {}
 
     if not M.snippets[vim.bo.filetype] then
+        -- nvim-cmp expects the callback to always be called, otherwise the source stays "fetching".
+        callback({})
         return
     end
 

@@ -17,7 +17,11 @@ local toggle_line = function(text, indent, commentpre, commentpost, commentpre_q
         if indent == '' then
             replacement, _ = commentpre .. text .. commentpost
         else
-            replacement, _ = text:gsub('^(' .. indent .. ')(%s*)(.*)', '%1' .. commentpre .. '%2%3' .. commentpost)
+            -- Escape '%' in the comment markers since they're used in a gsub replacement string
+            -- (e.g. TeX/MATLAB/Erlang commentstring '% %s').
+            local pre_repl = commentpre:gsub('%%', '%%%%')
+            local post_repl = commentpost:gsub('%%', '%%%%')
+            replacement, _ = text:gsub('^(' .. indent .. ')(%s*)(.*)', '%1' .. pre_repl .. '%2%3' .. post_repl)
         end
 
         return replacement

@@ -59,6 +59,15 @@ return {
             },
         })
 
+        -- vim-dadbod-completion registers this source itself, but it must be enabled per filetype.
+        cmp.setup.filetype({ 'sql', 'mysql', 'plsql' }, {
+            sources = {
+                { name = 'vim-dadbod-completion' },
+                { name = 'nvim_lsp' },
+                { name = 'snippets' },
+            },
+        })
+
         cmp.register_source('snippets', require('scripts.snippets').cmp_source.new())
     end,
 }
